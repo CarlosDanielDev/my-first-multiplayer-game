@@ -7,12 +7,12 @@
     <title>Meu primeiro jogo multiplayer</title>
     <style>
         #screen {
-            border: 10px solid #ccc;
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
-            image-rendering: -moz-crisp-edges;
-            width: 400px;
-            height: 400px;
+          border: 10px solid #ccc;
+          image-rendering: pixelated;
+          image-rendering: crisp-edges;
+          image-rendering: -moz-crisp-edges;
+          width: 400px;
+          height: 400px;
         }
     </style>
 </head>
@@ -46,6 +46,8 @@
                 context.fillStyle = 'green'
                 context.fillRect(fruit.x, fruit.y, 1, 1)
             }
+
+            requestAnimationFrame(renderScreen)
         }
     </script>
 </body>
