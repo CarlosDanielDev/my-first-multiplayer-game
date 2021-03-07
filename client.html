@@ -35,6 +35,8 @@
         renderScreen()
 
         function renderScreen() {
+          context.fillStyle = 'white'
+          context.fillRect(0, 0, 10, 10)
             for (const playerId in game.players) {
                 const player = game.players[playerId]
                 context.fillStyle = '#000'
