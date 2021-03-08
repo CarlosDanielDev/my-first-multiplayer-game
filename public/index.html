@@ -44,8 +44,14 @@
     })
 
     socket.on('start', (state) => {
-      console.log('started', state)
+      game.updateState(state)
     })
+
+    socket.on('add-player', (command) => {
+      console.log(`Receiving ${command.type} -> ${command.playerId}`)
+      game.addPlayer(command)
+    })
+
   </script>
 </body>
 </html>

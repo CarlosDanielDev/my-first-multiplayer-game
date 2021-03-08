@@ -8,17 +8,39 @@ export default function createGame() {
     }
   }
 
+  const observers = [];
+
+  function subscribe(observerFunction) {
+    observers.push(observerFunction)
+  }
+
+  function notifyAll(command) {
+
+    for (const observerFunction of observers) {
+      observerFunction(command)
+    }
+  }
+
+  function updateState(newState) {
+    Object.assign(state, newState);
+  }
+
   function addPlayer(command) {
-    const {
-      playerId, 
-      playerX, 
-      playerY 
-    } = command
+    const { playerId } = command
+    const playerX = 'playerX' in command ? command.playerX : Math.floor(Math.random() * state.screen.width)
+    const playerY = 'playerY' in command ? command.playerY : Math.floor(Math.random() * state.screen.height)
 
     state.players[playerId] = {
       x: playerX,
       y: playerY
     }
+
+    notifyAll({
+      type: 'add-player',
+      playerId,
+      playerX,
+      playerY
+    })
   }
 
   function removePlayer(command) {
@@ -109,6 +131,8 @@ export default function createGame() {
     addPlayer,
     removePlayer,
     addFruit,
-    removeFruit
+    removeFruit,
+    updateState,
+    subscribe
   }
 }
