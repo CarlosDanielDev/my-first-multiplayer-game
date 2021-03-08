@@ -1,20 +1,42 @@
-export default function renderScreen(screen, game, requestAnimationFrame, currentPlayerId, document) {
+function renderCanvas({screen, game}) {
+  const { state: { screen: { width, height } } } = game
+  screen.width = width
+  screen.height = height
+}
 
-    const { state } = game
-    const div = document.getElementById('score-players')
-    const list = document.createElement('ul')
 
-    div.innerHTML= ''
-    div.appendChild(list)
-    for (const playerId in state.players) {
-      const listItem = document.createElement('li')
-      const player = state.players[playerId]
-      const text = document.createTextNode(`score: ${player.score} - ${playerId}`)
-      listItem.appendChild(text)
+function renderScore({document, game, currentPlayerId}) {
+  const { state } = game
+  const div = document.getElementById('score-players')
+  const list = document.createElement('ul')
+  const parentList = list.parentNode
+  
+  div.innerHTML= ''
+  div.appendChild(list)
+  for (const playerId in state.players) {
+    const listItem = document.createElement('li')
+    const player = state.players[playerId]
+    const text = document.createTextNode(`score: ${player.score} - ${playerId}`)
+    listItem.appendChild(text)
+    list.appendChild(listItem)
+    if(currentPlayerId === playerId) {
+      listItem.innerHTML = ''
+      const span = document.createElement('span')
+      const textCurrentPlayer = document.createTextNode(`seu score: ${player.score}`)
+      span.appendChild(textCurrentPlayer)
+      parentList.insertBefore(span, undefined)
+      // listItem.appendChild(span)
       list.appendChild(listItem)
     }
-  
-  
+  }
+
+}
+
+
+export default function renderScreen(screen, game, requestAnimationFrame, currentPlayerId, document) {
+
+  renderCanvas({screen, game})
+  renderScore({document, game, currentPlayerId})
   
   const context = screen.getContext('2d')
 
