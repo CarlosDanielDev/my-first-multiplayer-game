@@ -24,8 +24,8 @@ function renderScore({document, game, currentPlayerId}) {
       const span = document.createElement('span')
       const textCurrentPlayer = document.createTextNode(`seu score: ${player.score}`)
       span.appendChild(textCurrentPlayer)
-      parentList.insertBefore(span, undefined)
-      // listItem.appendChild(span)
+      // parentList.insertBefore(span, undefined)
+      listItem.appendChild(span)
       list.appendChild(listItem)
     }
   }
