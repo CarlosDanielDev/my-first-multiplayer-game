@@ -15,6 +15,7 @@ export default function createGame() {
     setInterval(addFruit, frequency)
   }
 
+
   function subscribe(observerFunction) {
     observers.push(observerFunction)
   }
@@ -34,17 +35,20 @@ export default function createGame() {
     const { playerId } = command
     const playerX = 'playerX' in command ? command.playerX : Math.floor(Math.random() * state.screen.width)
     const playerY = 'playerY' in command ? command.playerY : Math.floor(Math.random() * state.screen.height)
+    const score = 0
 
     state.players[playerId] = {
       x: playerX,
-      y: playerY
+      y: playerY,
+      score
     }
 
     notifyAll({
       type: 'add-player',
       playerId,
       playerX,
-      playerY
+      playerY,
+      score
     })
   }
 
@@ -90,7 +94,6 @@ export default function createGame() {
 
   function movePlayer(command) {
     notifyAll(command)
-    console.log(`Moving ${command.playerId} with ${command.keyPressed}`)
 
     const acceptedMoves = {
       ArrowUp(player) {
@@ -132,8 +135,9 @@ export default function createGame() {
         const fruit = state.fruits[fruitId]
 
         if(player.x === fruit.x && player.y === fruit.y) {
-          console.log(`Collision between ${playerId} and ${fruitId}`)
+          console.log(`> Collision between ${playerId} and ${fruitId}`)
           removeFruit({ fruitId })
+          player.score++
         }
       }
   }

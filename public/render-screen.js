@@ -1,5 +1,23 @@
-export default function renderScreen(screen, game, requestAnimationFrame, currentPlayerId) {
+export default function renderScreen(screen, game, requestAnimationFrame, currentPlayerId, document) {
+
+    const { state } = game
+    const div = document.getElementById('score-players')
+    const list = document.createElement('ul')
+
+    div.innerHTML= ''
+    div.appendChild(list)
+    for (const playerId in state.players) {
+      const listItem = document.createElement('li')
+      const player = state.players[playerId]
+      const text = document.createTextNode(`score: ${player.score} - ${playerId}`)
+      listItem.appendChild(text)
+      list.appendChild(listItem)
+    }
+  
+  
+  
   const context = screen.getContext('2d')
+
   context.fillStyle = 'white'
   context.clearRect(0, 0, 10, 10)
   for (const playerId in game.state.players) {
@@ -20,8 +38,7 @@ export default function renderScreen(screen, game, requestAnimationFrame, curren
     context.fillRect(currentPlayer.x, currentPlayer.y, 1, 1)
   }
 
-
   requestAnimationFrame(() => {
-    renderScreen(screen, game, requestAnimationFrame, currentPlayerId)
+    renderScreen(screen, game, requestAnimationFrame, currentPlayerId, document)
   })
 }
