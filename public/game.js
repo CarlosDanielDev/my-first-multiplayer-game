@@ -47,6 +47,11 @@ export default function createGame() {
     const { playerId } = command
 
     delete state.players[playerId]
+
+    notifyAll({
+      type: 'remove-player',
+      playerId
+    })
   }
 
   function addFruit(command) {
@@ -75,29 +80,21 @@ export default function createGame() {
       ArrowUp(player) {
         if(player.y - 1 >= 0) {
           player.y--
-        } else {
-          player.y = state.screen.height - 1
         }
       },
       ArrowDown(player) {
         if(player.y + 1 < state.screen.height) {
           player.y++
-        } else {
-          player.y = 0
         }
       },
       ArrowRight(player) {
         if(player.x + 1 < state.screen.width) {
           player.x++
-        } else {
-          player.x = 0
         }
       },
       ArrowLeft(player) {
         if(player.x - 1 >= 0) {
           player.x--
-        } else {
-          player.x = state.screen.width - 1
         }
       }
     }
