@@ -8,6 +8,7 @@
   <style>
     #screen {
       border: 10px solid #ccc;
+      border-radius: 8px;
       image-rendering: pixelated;
       image-rendering: crisp-edges;
       image-rendering: -moz-crisp-edges;
@@ -73,20 +74,17 @@
 
         const acceptedMoves = {
           ArrowUp(player) {
-            if(player.y - 1 >= 0) player.y--
-            console.log('Moving player Up')
+            player.y = Math.max(player.y - 1, 0)
           },
           ArrowDown(player) {
-            if(player.y + 1 < screen.height) player.y++
-            console.log('Moving player Down')
+            player.y = Math.min(player.y + 1, screen.height)
+
           },
           ArrowRight(player) {
-            if(player.x + 1 < screen.width) player.x++
-            console.log('Moving player Right')
+            player.x = Math.min(player.x + 1, screen.width)
           },
           ArrowLeft(player) {
-            if(player.x - 1 >= 0) player.x--
-            console.log('Moving player Left')
+            player.x = Math.max(player.x - 1, 0)
           }
         }
         const keyPressed = command.keyPressed
@@ -95,8 +93,24 @@
 
         if(player && moveFunction) {
           moveFunction(player)
+          checkForFruitCollision()
         }
         return
+      }
+
+      function checkForFruitCollision() {
+        for (const playerId in state.players) {
+          const player = state.players[playerId]
+
+          for (const fruitId in state.fruits) {
+            const fruit = state.fruits[fruitId]
+
+            if(player.x === fruit.x && player.y === fruit.y) {
+              console.log(`Collision between ${playerId} and ${fruitId}`)
+              removeFruit({ fruitId })
+            }
+          }
+        }
       }
 
       return {
@@ -110,6 +124,19 @@
     }
 
     const game = createGame()
+
+    game.addPlayer({
+      playerId: 'player1',
+      playerX:0,
+      playerY: 0
+    })
+    
+    game.addFruit({
+      fruitId: 'fruit1',
+      fruitX:7,
+      fruitY: 5
+    })
+
     const keyboadListener = createKeyboardListener()
     keyboadListener.subscribe(game.movePlayer)
 
@@ -155,7 +182,9 @@
       context.clearRect(0, 0, 10, 10)
       for (const playerId in game.state.players) {
         const player = game.state.players[playerId]
+        // context.strokeStyle = '#f00'
         context.fillStyle = '#000'
+        // context.strokeRect(player.x, player.y, 0.1, 0.1)
         context.fillRect(player.x, player.y, 1, 1)
       }
 
