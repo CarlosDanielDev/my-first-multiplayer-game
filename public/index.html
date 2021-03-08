@@ -43,8 +43,12 @@
       const { id: playerId } = socket
       
       game.updateState(state)
+      
       keyboadListener.registerPlayerId(playerId)
       keyboadListener.subscribe(game.movePlayer)
+      keyboadListener.subscribe((command) => {
+        socket.emit(command.type, command)
+      })
     })
 
     socket.on('add-player', (command) => {
@@ -55,6 +59,22 @@
     socket.on('remove-player', (command) => {
       console.log(`Receiving ${command.type} -> ${command.playerId}`)
       game.removePlayer(command)
+    })
+
+    socket.on('move-player', (command) => {
+      const {id: playerId} = socket
+      console.log(`Receiving ${command.type} -> ${command.playerId}`)
+      if(playerId !== command.playerId) game.movePlayer(command)
+    })
+
+    socket.on('add-fruit', (command) => {
+      console.log(`Receiving ${command.type} -> ${command.fruitId}`)
+      game.addFruit(command)
+    })
+
+    socket.on('remove-fruit', (command) => {
+      console.log(`Receiving ${command.type} -> ${command.fruitId}`)
+      game.removeFruit(command)
     })
 
   </script>
