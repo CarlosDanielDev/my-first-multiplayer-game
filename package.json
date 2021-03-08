@@ -1,0 +1,28 @@
+{
+  "name": "multiplayer-game",
+  "version": "1.0.0",
+  "description": "My first mulyiplayer game in JS using canvas",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarlosDanielDev/my-first-multiplayer-game.git"
+  },
+  "keywords": [
+    "Game"
+  ],
+  "author": "Carlos Daniel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CarlosDanielDev/my-first-multiplayer-game/issues"
+  },
+  "homepage": "https://github.com/CarlosDanielDev/my-first-multiplayer-game#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^3.1.2",
+    "socket.io-client": "^3.1.2"
+  }
+}
