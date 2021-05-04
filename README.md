@@ -21,7 +21,7 @@ yarn
 ```
 
 
-Para inciar a aplicação use o [Node](https://nodejs.org/en/download/) para executar o scrept server.js com o comando abaixo:
+Para inciar a aplicação use o [Node](https://nodejs.org/en/download/) para executar o script `server.js` com o comando abaixo:
 
 > É importante salientar que o Node deve estar na sua versão LTS, sugiro a versão 14 em diante.
 
