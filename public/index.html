@@ -4,11 +4,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles/styles.css">
+  <link rel="stylesheet" href="./styles/modal.css">
   <title>Meu primeiro jogo multiplayer</title>
   <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+  <a id="open_modal" href="#openModal"></a>
+  <div id="openModal" class="modalDialog">
+    <div>	<a href="#close" title="Close" class="close">X</a>
+      <h2>Modal Box</h2>
+    </div>
+  </div>
   <div id="container">
     <canvas id="screen" ></canvas>
     <div id="score-players"></div>
@@ -25,12 +32,17 @@
     const socket = io()
     
     socket.on('connect', () => {
+
       const { id: playerId } = socket
       
       console.log(`Player connected on Client with id: ${playerId}`)
       const screen = document.getElementById('screen')
-
-      renderScreen(screen, game, requestAnimationFrame, playerId, document)
+      let user_name;
+      const handleClick = document.getElementById('open_modal')
+      // handleClick.click()
+      // if(user_name) {
+        renderScreen(screen, game, requestAnimationFrame, playerId, document)
+      // }
     })
     
     socket.on('start', (state) => {

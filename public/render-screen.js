@@ -24,7 +24,6 @@ function renderScore({document, game, currentPlayerId}) {
       const span = document.createElement('span')
       const textCurrentPlayer = document.createTextNode(`seu score: ${player.score}`)
       span.appendChild(textCurrentPlayer)
-      // parentList.insertBefore(span, undefined)
       listItem.appendChild(span)
       list.appendChild(listItem)
     }
@@ -40,23 +39,23 @@ export default function renderScreen(screen, game, requestAnimationFrame, curren
   
   const context = screen.getContext('2d')
 
-  context.fillStyle = 'white'
+  context.fillStyle = '#D7E5E5'
   context.clearRect(0, 0, 10, 10)
   for (const playerId in game.state.players) {
     const player = game.state.players[playerId]
-    context.fillStyle = '#000'
+    context.fillStyle = '#B1AFC1'
     context.fillRect(player.x, player.y, 1, 1)
   }
 
   for (const fruitId in game.state.fruits) {
     const fruit = game.state.fruits[fruitId]
-    context.fillStyle = 'green'
+    context.fillStyle = '#8685EF'
     context.fillRect(fruit.x, fruit.y, 1, 1)
   }
 
   const currentPlayer = game.state.players[currentPlayerId]
   if(currentPlayer) {
-    context.fillStyle = '#7159c1'
+    context.fillStyle = '#318285'
     context.fillRect(currentPlayer.x, currentPlayer.y, 1, 1)
   }
 

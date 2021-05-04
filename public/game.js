@@ -8,10 +8,10 @@ export default function createGame() {
     }
   }
 
-  const observers = [];
+  const observers = []
+  const maxFruits = 3
 
   function start(frequency = 2000) {
-
     setInterval(addFruit, frequency)
   }
 
@@ -33,8 +33,14 @@ export default function createGame() {
 
   function addPlayer(command) {
     const { playerId } = command
-    const playerX = 'playerX' in command ? command.playerX : Math.floor(Math.random() * state.screen.width)
-    const playerY = 'playerY' in command ? command.playerY : Math.floor(Math.random() * state.screen.height)
+    const playerX = 'playerX' in command 
+    ? command.playerX 
+    : Math.floor(Math.random() * state.screen.width)
+
+    const playerY = 'playerY' in command 
+    ? command.playerY 
+    : Math.floor(Math.random() * state.screen.height)
+
     const score = 0
 
     state.players[playerId] = {
@@ -64,21 +70,33 @@ export default function createGame() {
   }
 
   function addFruit(command) {
-    const fruitId = command ? command.fruitId : Math.floor(Math.random() * 100000)
-    const fruitX = command ? command.fruitX : Math.floor(Math.random() * state.screen.width)
-    const fruitY = command ? command.fruitY : Math.floor(Math.random() * state.screen.height)
+    const currentLength = Object.keys(state.fruits).length
+    if(currentLength <= maxFruits) {
+    const fruitId = command 
+    ? command.fruitId 
+    : Math.floor(Math.random() * 100000)
 
+    const fruitX = command 
+    ? command.fruitX 
+    : Math.floor(Math.random() * state.screen.width)
+
+    const fruitY = command 
+    ? command.fruitY 
+    : Math.floor(Math.random() * state.screen.height)
+    
     state.fruits[fruitId] = {
       x: fruitX,
       y: fruitY
     }
-
+    
     notifyAll({
       type: 'add-fruit',
       fruitId,
       fruitX,
       fruitY
     })
+  }
+
   }
 
   function removeFruit(command) {

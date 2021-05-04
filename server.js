@@ -16,26 +16,26 @@ const game = createGame()
 game.start()
 
 game.subscribe((command) => {
-  console.log(`> Emitting ${command.type}`)
+  console.log(`> Emitting the subscription ${command.type}`)
   sockets.emit(command.type, command)
 })
 
 sockets.on('connection', (socket) => {
   const {id: playerId} = socket
-  console.log(`> Player ${playerId} has been connected!`)
+  console.log(`> Hello a new player ${playerId} has been connected!`)
 
   game.addPlayer({playerId})
 
   socket.emit('start', game.state)
   
   socket.on('disconnect', () => {
-    console.log(`> Player ${playerId} has disconnected`)
+    console.log(`> Opps! the player ${playerId} has disconnected`)
     game.removePlayer({ playerId })
   })
 
-  socket.on('move-player', (command) => {
+  socket.on('moving-player', (command) => {
     command.playerId = playerId
-    command.type = 'move-player'
+    command.type = 'moving-player'
 
     game.movePlayer(command)
   })
